@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table">
+    <tr>
+        {% for key in result_keys %}
+        <th scope="col">{{ key }}</th>
+        {% endfor %}
+    </tr>
+    {% for result in results %}
+    <tr>
+        {% for key in result_keys %}
+        <td>{{ result[key] }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

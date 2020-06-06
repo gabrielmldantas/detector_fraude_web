@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+    form {
+        margin: 10px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<form method="POST">
+    <div>
+        <span>Step: {{ step }}</span>
+    </div>
+    <div class="form-group">
+        <label for="type">Tipo da Transação</label>
+        <select name="type" id="type" class="form-control">
+            <option value="">Selecione...</option>
+            <option value="3">Débito</option>
+            <option value="4">Depósito</option>
+            <option value="0">Pagamento</option>
+            <option value="2">Saque</option>
+            <option value="1">Transferência</option>
+        </select>
+    </div>
+    <div>
+        <fieldset>
+            <legend>Dados da Origem</legend>
+            <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" name="quantidade" id="quantidade" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="saldoAnteriorOrigem">Saldo Anterior</label>
+                <input type="number" name="saldoAnteriorOrigem" id="saldoAnteriorOrigem" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="novoSaldoOrigem">Saldo Atual</label>
+                <input type="number" name="novoSaldoOrigem" id="novoSaldoOrigem" class="form-control">
+            </div>
+        </fieldset>
+    </div>
+    <div>
+        <fieldset>
+            <legend>Dados do Destino</legend>
+            <div class="form-group">
+                <label for="saldoAnteriorDestino">Saldo Anterior</label>
+                <input type="number" name="saldoAnteriorDestino" id="saldoAnteriorDestino" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="novoSaldoDestino">Novo Saldo</label>
+                <input type="number" name="novoSaldoDestino" id="novoSaldoDestino" class="form-control">
+            </div>
+        </fieldset>
+    </div>
+    <div>
+        <input type="submit" value="Adicionar ao batch">
+    </div>
+</form>
+<fieldset style="margin: 10px">
+    <legend>Batch</legend>
+    
+    <table class="table">
+        <tr>
+            {% for header in table_headers %}
+            <th scope="col">{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in batch_rows %}
+        <tr>
+            {% for header in table_headers %}
+            <td>{{ row[header] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <form action="/batch/enviar" method="POST" style="margin-top: 10px;">
+        <input type="submit" value="Enviar batch">
+    </form>
+</fieldset>
+{% endblock %}
